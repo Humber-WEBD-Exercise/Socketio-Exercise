@@ -49,7 +49,7 @@
 
         // Emit message of mouse click
         $('body').click(function(e){
-          socket.emit('click position', [e.clientX,e.clientY]);
+          socket.emit('click position', [e.pageX,e.pageY]);
         })
     </script>
 </body>
