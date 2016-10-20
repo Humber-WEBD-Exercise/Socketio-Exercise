@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Display</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="display">
+  <canvas id="canvas" width="384" height="200"></canvas>
+  <h3></h3>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+        var socket = io();
+        //Listen for the Message from the server
+        socket.on('button message', function(msg){
+          $('h3').text(msg + " button is pressed");
+        })
+
+        socket.on('button colour', function(colour){
+          $('body').css('background',colour);
+        })
+
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        ctx.globalAlpha = 0.2;
+        var rect = c.getBoundingClientRect();
+        socket.on('click position', function(position){
+          var x = position[0] - rect.left;
+          var y = position[1] - rect.top;
+          ctx.fillRect(x,y,5,5);
+        })
+    </script>
+</body>
+</html>

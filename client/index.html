@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="home">
+  <main>
+    <div>
+      <button type="button" name="button" class="red-btn">Red</button>
+      <button type="button" name="button" class="yellow-btn">Yellow</button>
+    </div>
+    <div>
+      <button type="button" name="button" class="purple-btn">Purple</button>
+      <button type="button" name="button" class="blue-btn">Blue</button>
+    </div>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+        var socket = io();
+        // Emit message of btns
+        $('.red-btn').click(function(){
+          sendMsg($(this));
+        })
+
+        $('.yellow-btn').click(function(){
+          sendMsg($(this));
+        })
+
+        $('.purple-btn').click(function(){
+          sendMsg($(this));
+        })
+
+        $('.blue-btn').click(function(){
+          sendMsg($(this));
+        })
+
+        function sendMsg(btn){
+          var msg = btn.text();
+          socket.emit('button message', msg);
+
+          var colour = btn.css('background');
+          socket.emit('button colour', colour);
+        }
+
+        // Emit message of mouse
+        $('body').click(function(e){
+          socket.emit('click position', [e.clientX,e.clientY]);
+        })
+    </script>
+</body>
+</html>
